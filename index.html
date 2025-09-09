@@ -1,230 +1,516 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daniel Prawira - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4a6741 0%, #2d3e29 50%, #1a2419 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo::before {
+            content: "⚡";
+            margin-right: 10px;
+            color: #f1e047;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #f1e047, #e6d635);
+            color: #2d3e29;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(241, 224, 71, 0.3);
+        }
+
+        .cta-button::after {
+            content: "⚡";
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 300;
+            line-height: 0.9;
+            margin-bottom: 40px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title .highlight {
+            color: #f1e047;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .hero-title .highlight::before {
+            content: "⚡";
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        /* Main Visual */
+        .main-visual {
+            position: relative;
+            height: 400px;
+            margin: 60px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: all 0.5s ease;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .profile-card:hover {
+            transform: perspective(1000px) rotateY(0deg) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f1e047, #e6d635);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #2d3e29;
+            box-shadow: 0 10px 30px rgba(241, 224, 71, 0.3);
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .profile-title {
+            font-size: 1.2rem;
+            color: #f1e047;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .profile-details {
+            display: grid;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(241, 224, 71, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Feature Cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f1e047, #e6d635);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #f1e047;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .feature-button {
+            background: transparent;
+            border: 1px solid #f1e047;
+            color: #f1e047;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .feature-button:hover {
+            background: #f1e047;
+            color: #2d3e29;
+            transform: translateY(-2px);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-card {
+                margin: 0 20px;
+            }
+        }
+
+        /* Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #f1e047 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, #f1e047 1px, transparent 1px);
+            background-size: 100px 100px, 50px 50px;
+            z-index: -1;
+            animation: backgroundMove 20s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+    </style>
 </head>
-<body bgcolor="#f0f0f0" text="#333333">
+<body>
+    <div class="floating-element">⚡</div>
+    <div class="floating-element">💻</div>
+    <div class="floating-element">🚀</div>
 
-<!-- Header -->
-<table width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="position: fixed; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <tr>
-        <td width="20%">
-            <h2 style="color: #667eea; margin: 20px;">Daniel Prawira</h2>
-        </td>
-        <td align="right" style="padding: 20px;">
-            <a href="#home" style="text-decoration: none; color: #333; margin: 0 15px; font-weight: bold;">Home</a>
-            <a href="#about" style="text-decoration: none; color: #333; margin: 0 15px; font-weight: bold;">About</a>
-            <a href="#portfolio" style="text-decoration: none; color: #333; margin: 0 15px; font-weight: bold;">Portfolio</a>
-            <a href="#contact" style="text-decoration: none; color: #333; margin: 0 15px; font-weight: bold;">Contact</a>
-        </td>
-    </tr>
-</table>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Daniel Prawira</div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="cta-button">HIRE ME</a>
+            </nav>
+        </div>
+    </header>
 
-<!-- Hero Section -->
-<div id="home" style="margin-top: 80px;">
-    <table width="100%" height="600" cellpadding="0" cellspacing="0" bgcolor="#667eea">
-        <tr>
-            <td align="center" valign="middle">
-                <h1 style="color: white; font-size: 48px; margin-bottom: 20px;">Halo, Saya Daniel Prawira</h1>
-                <h2 style="color: white; font-size: 24px; margin-bottom: 30px;">Web Developer & UI/UX Designer</h2>
-                <p style="color: white; font-size: 18px; margin-bottom: 40px;">Saya menciptakan pengalaman digital yang menakjubkan</p>
-                <a href="#portfolio" style="background-color: white; color: #667eea; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">Lihat Karya Saya</a>
-            </td>
-        </tr>
-    </table>
-</div>
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1 class="hero-title">
+                    Creative <span class="highlight">Developer</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Building innovative solutions with passion and expertise
+                </p>
 
-<!-- About Section -->
-<div id="about" style="padding: 80px 0;">
-    <table width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td align="center">
-                <h2 style="font-size: 36px; margin-bottom: 50px; color: #333;">Tentang Saya</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="80%" align="center" cellpadding="20" cellspacing="0">
-                    <tr>
-                        <td width="40%" align="center">
-                            <img src="Depe foto.png" alt="Daniel Prawira - Profile Picture" width="250" height="250" style="border-radius: 50%; object-fit: cover; object-position: center; border: 4px solid #667eea; max-width: 100%; height: auto;">
-                        </td>
-                        <td width="60%" valign="top">
-                            <h3 style="font-size: 24px; margin-bottom: 20px; color: #667eea;">Web Developer Berpengalaman</h3>
-                            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-                                Saya adalah seorang web developer dengan pengalaman 5+ tahun dalam menciptakan website dan aplikasi web yang responsif dan user-friendly. Saya memiliki keahlian dalam berbagai teknologi modern.
-                            </p>
-                            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-                                Passion saya adalah mengubah ide menjadi solusi digital yang inovatif dan berdampak positif bagi pengguna.
-                            </p>
-                            
-                            <h4 style="font-size: 20px; margin-bottom: 15px; color: #333;">Keahlian:</h4>
-                            <ul style="font-size: 16px; line-height: 1.8;">
-                                <li><b>Frontend:</b> HTML5, CSS3, JavaScript, React, Vue.js</li>
-                                <li><b>Backend:</b> Node.js, PHP, Python, MySQL</li>
-                                <li><b>Design:</b> Figma, Adobe XD, Photoshop</li>
-                                <li><b>Tools:</b> Git, Docker, VS Code</li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
+                <div class="main-visual">
+                    <div class="profile-card">
+                        <div class="profile-avatar">DP</div>
+                        <h2 class="profile-name">Daniel Prawira</h2>
+                        <p class="profile-title">Full Stack Developer</p>
+                        <div class="profile-details">
+                            <div class="detail-item">
+                                <div class="detail-icon">📱</div>
+                                <div>088802402387</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-icon">✉️</div>
+                                <div>danielprawira62@gmail.com</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-icon">🎂</div>
+                                <div>20 years old</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-icon">🎯</div>
+                                <div>Ready for new challenges</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-<!-- Portfolio Section -->
-<div id="portfolio" style="padding: 80px 0; background-color: #f8f9fa;">
-    <table width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td align="center">
-                <h2 style="font-size: 36px; margin-bottom: 50px; color: #333;">Portfolio Saya</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="90%" align="center" cellpadding="20" cellspacing="20">
-                    <tr>
-                        <!-- Project 1 -->
-                        <td width="33%" align="center" bgcolor="white" style="padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23667eea'/%3E%3Ctext x='150' y='110' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3EE-Commerce%3C/text%3E%3C/svg%3E" alt="E-Commerce Website" width="100%" style="margin-bottom: 20px;">
-                            <h3 style="font-size: 20px; margin-bottom: 15px; color: #333;">E-Commerce Website</h3>
-                            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
-                                Website toko online dengan fitur lengkap termasuk keranjang belanja, sistem pembayaran, dan dashboard admin.
-                            </p>
-                            <p style="font-size: 12px; color: #667eea; margin-bottom: 15px;"><b>Tech:</b> HTML, CSS, JavaScript, PHP, MySQL</p>
-                            <a href="#" style="background-color: #667eea; color: white; padding: 8px 20px; text-decoration: none; border-radius: 5px; font-size: 14px;">Lihat Detail</a>
-                        </td>
-                        
-                        <!-- Project 2 -->
-                        <td width="33%" align="center" bgcolor="white" style="padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23764ba2'/%3E%3Ctext x='150' y='110' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3EPortfolio%3C/text%3E%3C/svg%3E" alt="Portfolio Website" width="100%" style="margin-bottom: 20px;">
-                            <h3 style="font-size: 20px; margin-bottom: 15px; color: #333;">Portfolio Website</h3>
-                            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
-                                Website portfolio responsif untuk menampilkan karya dan skill dengan desain modern dan interaktif.
-                            </p>
-                            <p style="font-size: 12px; color: #667eea; margin-bottom: 15px;"><b>Tech:</b> HTML, CSS, JavaScript, React</p>
-                            <a href="#" style="background-color: #667eea; color: white; padding: 8px 20px; text-decoration: none; border-radius: 5px; font-size: 14px;">Lihat Detail</a>
-                        </td>
-                        
-                        <!-- Project 3 -->
-                        <td width="33%" align="center" bgcolor="white" style="padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%2352c41a'/%3E%3Ctext x='150' y='110' text-anchor='middle' fill='white' font-size='18' font-family='Arial'%3ETask Manager%3C/text%3E%3C/svg%3E" alt="Task Manager App" width="100%" style="margin-bottom: 20px;">
-                            <h3 style="font-size: 20px; margin-bottom: 15px; color: #333;">Task Manager App</h3>
-                            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
-                                Aplikasi manajemen tugas dengan fitur drag & drop, notifikasi, dan kolaborasi tim real-time.
-                            </p>
-                            <p style="font-size: 12px; color: #667eea; margin-bottom: 15px;"><b>Tech:</b> Vue.js, Node.js, Socket.io, MongoDB</p>
-                            <a href="#" style="background-color: #667eea; color: white; padding: 8px 20px; text-decoration: none; border-radius: 5px; font-size: 14px;">Lihat Detail</a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
+            <section class="features">
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h3 class="feature-title">Frontend Development</h3>
+                    <p class="feature-description">
+                        Creating responsive and interactive user interfaces with modern technologies like React, Vue.js, and cutting-edge CSS frameworks.
+                    </p>
+                    <a href="#projects" class="feature-button">VIEW PROJECTS</a>
+                </div>
 
-<!-- Contact Section -->
-<div id="contact" style="padding: 80px 0;">
-    <table width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td align="center">
-                <h2 style="font-size: 36px; margin-bottom: 50px; color: #333;">Hubungi Saya</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table width="80%" align="center" cellpadding="20" cellspacing="0">
-                    <tr>
-                        <td width="50%" valign="top">
-                            <h3 style="font-size: 24px; margin-bottom: 20px; color: #667eea;">Mari Berkolaborasi!</h3>
-                            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-                                Saya selalu terbuka untuk proyek baru yang menarik. Mari diskusikan ide Anda dan wujudkan bersama!
-                            </p>
-                            
-                            <table cellpadding="10" cellspacing="0">
-                                <tr>
-                                    <td><b>📧 Email:</b></td>
-                                    <td><a href="mailto:danielprawira62@gmail.com" style="color: #667eea; text-decoration: none;">danielprawira62@gmail.com</a></td>
-                                </tr>
-                                <tr>
-                                    <td><b>📱 Phone:</b></td>
-                                    <td><a href="tel:+6288802402387" style="color: #667eea; text-decoration: none;">+62 888-0240-2387</a></td>
-                                </tr>
-                                <tr>
-                                    <td><b>📍 Location:</b></td>
-                                    <td>Pasarkemis, West Java, Indonesia</td>
-                                </tr>
-                                <tr>
-                                    <td><b>💼 LinkedIn:</b></td>
-                                    <td><a href="#" style="color: #667eea; text-decoration: none;">linkedin.com/in/danielprawira</a></td>
-                                </tr>
-                                <tr>
-                                    <td><b>💻 GitHub:</b></td>
-                                    <td><a href="#" style="color: #667eea; text-decoration: none;">github.com/danielprawira</a></td>
-                                </tr>
-                            </table>
-                        </td>
-                        
-                        <td width="50%" valign="top" bgcolor="#f8f9fa" style="padding: 30px; border-radius: 10px;">
-                            <h3 style="font-size: 20px; margin-bottom: 20px; color: #333;">Kirim Pesan</h3>
-                            <form>
-                                <table width="100%" cellpadding="5" cellspacing="0">
-                                    <tr>
-                                        <td>
-                                            <input type="text" placeholder="Nama Lengkap" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; margin-bottom: 15px;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="email" placeholder="Email" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; margin-bottom: 15px;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" placeholder="Subject" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; margin-bottom: 15px;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <textarea placeholder="Pesan Anda..." rows="5" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; margin-bottom: 20px; resize: vertical;"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="submit" value="Kirim Pesan" style="background-color: #667eea; color: white; padding: 12px 30px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; width: 100%;">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3 class="feature-title">Backend Solutions</h3>
+                    <p class="feature-description">
+                        Building robust server-side applications and APIs with Node.js, Python, and database management systems.
+                    </p>
+                    <a href="#skills" class="feature-button">LEARN MORE</a>
+                </div>
 
-<!-- Footer -->
-<table width="100%" cellpadding="0" cellspacing="0" bgcolor="#333">
-    <tr>
-        <td align="center" style="padding: 40px 20px;">
-            <p style="color: white; font-size: 16px; margin-bottom: 20px;">
-                © 2024 John Doe. All rights reserved.
-            </p>
-            <p style="color: #ccc; font-size: 14px;">
-                Dibuat dengan ❤️ menggunakan HTML murni
-            </p>
-            <br>
-            <a href="#home" style="color: white; text-decoration: none; margin: 0 15px;">Home</a>
-            <a href="#about" style="color: white; text-decoration: none; margin: 0 15px;">About</a>
-            <a href="#portfolio" style="color: white; text-decoration: none; margin: 0 15px;">Portfolio</a>
-            <a href="#contact" style="color: white; text-decoration: none; margin: 0 15px;">Contact</a>
-        </td>
-    </tr>
-</table>
+                <div class="feature-card">
+                    <span class="feature-icon">💡</span>
+                    <h3 class="feature-title">Creative Problem Solving</h3>
+                    <p class="feature-description">
+                        Innovative approach to complex challenges with clean, maintainable code and user-centered design thinking.
+                    </p>
+                    <a href="#contact" class="feature-button">COLLABORATE</a>
+                </div>
+            </section>
+        </div>
+    </main>
 
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-element');
+            
+            parallax.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Add hover effects to profile card
+        const profileCard = document.querySelector('.profile-card');
+        profileCard.addEventListener('mousemove', (e) => {
+            const rect = profileCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            profileCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+        });
+
+        profileCard.addEventListener('mouseleave', () => {
+            profileCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        });
+
+        // Add typing animation to hero title
+        const heroTitle = document.querySelector('.hero-title');
+        const text = heroTitle.innerHTML;
+        heroTitle.innerHTML = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        
+        setTimeout(typeWriter, 500);
+    </script>
 </body>
 </html>
