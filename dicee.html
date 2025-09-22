@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dicee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+      .container {
+        width: 70%;
+        margin: auto;
+        text-align: center;
+      }
+
+      .dice {
+        text-align: center;
+        display: inline-block;
+        margin: 20px;
+      }
+
+      body {
+        background-color: #393E46;
+        padding: 20px;
+      }
+
+      h1 {
+        margin: 30px;
+        font-family: "Montserrat", sans-serif;
+        text-shadow: 5px 0 #232931;
+        font-size: 5rem;
+        color: #4ECCA3;
+      }
+
+      p {
+        font-size: 2rem;
+        color: #4ECCA3;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 10px;
+      }
+
+      img {
+        width: 150px;
+        height: 150px;
+        transition: transform 0.3s ease;
+      }
+
+      img:hover {
+        transform: scale(1.1);
+      }
+
+      .result {
+        font-size: 3rem;
+        color: #FFD23F;
+        font-family: "Montserrat", sans-serif;
+        margin: 30px 0;
+        text-shadow: 3px 0 #232931;
+        min-height: 60px;
+      }
+
+      .roll-button {
+        background-color: #4ECCA3;
+        color: #232931;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 20px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .roll-button:hover {
+        background-color: #FFD23F;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      }
+
+      .roll-button:active {
+        transform: translateY(0);
+      }
+
+      .dice-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        margin: 40px 0;
+      }
+
+      .rolling {
+        animation: roll 0.5s ease-in-out;
+      }
+
+      @keyframes roll {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(90deg); }
+        50% { transform: rotate(180deg); }
+        75% { transform: rotate(270deg); }
+      }
+
+      @media (max-width: 768px) {
+        .dice-container {
+          flex-direction: column;
+          gap: 30px;
+        }
+        
+        h1 {
+          font-size: 3rem;
+        }
+        
+        .result {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Roll Me</h1>
+
+      <div class="dice-container">
+        <div class="dice">
+          <p>Player 1</p>
+          <img class="img1" src="dice1.png" alt="Player 1 Dice" />
+        </div>
+
+        <div class="dice">
+          <p>Player 2</p>
+          <img class="img2" src="dice1.png" alt="Player 2 Dice" />
+        </div>
+      </div>
+
+      <div class="result" id="result">Click "Roll Dice" to start!</div>
+      
+      <button class="roll-button" onclick="rollDice()">🎲 Roll Dice 🎲</button>
+    </div>
+
+    <script>
+      function rollDice() {
+        // Add rolling animation
+        const img1 = document.querySelector('.img1');
+        const img2 = document.querySelector('.img2');
+        const result = document.getElementById('result');
+        
+        img1.classList.add('rolling');
+        img2.classList.add('rolling');
+        
+        // Show rolling message
+        result.textContent = "Rolling...";
+        
+        // Generate random numbers after animation delay
+        setTimeout(() => {
+          // Generate random numbers between 1 and 6
+          const randomNumber1 = Math.floor(Math.random() * 6) + 1;
+          const randomNumber2 = Math.floor(Math.random() * 6) + 1;
+          
+          // Set the dice images
+          img1.src = `dice${randomNumber1}.png`;
+          img2.src = `dice${randomNumber2}.png`;
+          
+          // Remove rolling animation
+          img1.classList.remove('rolling');
+          img2.classList.remove('rolling');
+          
+          // Determine and display the winner
+          let resultText;
+          if (randomNumber1 > randomNumber2) {
+            resultText = "🎉 Player 1 Wins! 🎉";
+          } else if (randomNumber1 < randomNumber2) {
+            resultText = "🎉 Player 2 Wins! 🎉";
+          } else {
+            resultText = "🤝 It's a Draw! 🤝";
+          }
+          
+          result.textContent = resultText;
+        }, 500);
+      }
+      
+      // Initialize the game with random dice on page load
+      window.addEventListener('load', () => {
+        rollDice();
+      });
+      
+      // Add keyboard support - press spacebar to roll
+      document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+          event.preventDefault();
+          rollDice();
+        }
+      });
+    </script>
+  </body>
+</html>
